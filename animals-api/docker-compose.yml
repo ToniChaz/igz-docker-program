@@ -1,0 +1,24 @@
+version: '3'
+services:
+  api:
+    build: .
+    container_name: "IGZ-Docker"
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./src:/opt/igz-docker/src
+    depends_on:
+      - mongo
+    links:
+      - mongo
+    command: dev
+
+  mongo:
+    image: mongo:latest
+    container_name: "IGZ-Mongo"
+    volumes:
+      - ./data:/data/db
+    command: --storageEngine wiredTiger
+    ports:
+      - "27018:27017"
+
